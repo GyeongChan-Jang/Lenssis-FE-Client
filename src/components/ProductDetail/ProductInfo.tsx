@@ -228,10 +228,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     // 도수 선택시 detailState 값이 변경되지 않는문제 -> useEffect로 감시
     if (finalProduct.productName === '' && detailState.graphicDiameter) postAllOptions(detailState)
 
-    console.log('옵션 선택 state', detailState)
-    console.log('degree', detailState.degree)
-    console.log('도수까지 선택했을때/최종상품', finalProduct)
-    console.log('옵션 순차적으로', productByOptions)
   }, [productDetails?.price, productByOptions, detailState, finalProduct])
 
   const buyHandler = () => {
