@@ -174,11 +174,25 @@
 
 - React.lazy와 suspense를 사용해 간결한 코드로 스켈레톤을 적용시켰습니다.
 
+### - 리뷰 등록/수정/삭제 구현
+
+<img width="600" src="https://user-images.githubusercontent.com/90392240/197601702-3c0f6cf2-b415-4e17-8740-a252f5d4163c.gif" />
+
+- AWS-S3 오류로 인해 파이어베이스 스토리지를 활용하여 이미지를 저장하고 불러왔습니다.
+
+- 리뷰 폼을 리뷰 등록과 수정에서 재사용하기 위해 리뷰 폼 컴포넌트를 분리했습니다.
+
+- 리뷰 수정 시 기존에 작성한 리뷰를 불러와 폼에 입력되어 있도록 구현했습니다.
+
+- useMutation의 onSuccess 옵션을 통해 리뷰 등록/수정/삭제 후 토스트를 작동시켜 사용자에게 알려주었습니다.
+
 ### - 리뷰 페이지 구현
 
-<img width="600" src="https://user-images.githubusercontent.com/90392240/197587593-64e0179a-05da-4b82-a5ff-17d09ea714ed.gif" />
+<img width="600" src="https://user-images.githubusercontent.com/90392240/197602692-e0055dff-c076-4755-995d-ec6dd1e94271.gif" />
 
-- 리액트 쿼리를 이용하여 useMutation을 사용해 상품 이름별 리뷰를 가져올 수 있습니다.
+- useMutation을 사용해 상품 이름에 따른 리뷰를 가져오도록 구현했습니다.
+
+- 리뷰에 대한 댓글은 관리자만 댓글을 남길 수 있습니다.
 
 ## 피그마 디자인
 
