@@ -50,11 +50,11 @@
 <img src="https://img.shields.io/badge/TYPESCRIPT-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/REACT-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=React-Query&logoColor=ffffff"/> <img src="https://img.shields.io/badge/Recoil-af42dc?style=for-the-badge&logo=Recoil&logoColor=white"/>
 <img src="https://img.shields.io/badge/TAILWIND CSS-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=white"/>
 
-- React-Query
+- **React-Query**
   - 기존 렌시스 페이지는 로딩시간이 오래걸리는 문제가 있었습니다. 이를 해결하기 위해 React-Query를 사용하여 데이터를 prefecth하여 성능을 높였습니다.
-- Recoil
+- **Recoil**
   - 리액트 쿼리와 연계하여 사용하여 전역 상태 관리를 하였습니다. 간결한 코드로 코드를 줄이고 효율적으로 사용할 수 있었습니다.
-- TailWind CSS
+- **TailWind CSS**
   - 기간이 짧아 빠른 모바일/웹 반응형 마크업이 필요한 상황이었습니다. 테일윈드를 사용하여 단기간에 스타일링할 수 있었습니다.
 
 ## 📅 기간
@@ -174,9 +174,11 @@
 
 - React.lazy와 suspense를 사용해 간결한 코드로 스켈레톤을 적용시켰습니다.
 
-### - 리뷰 작성/수정/삭제 구현
+### - 리뷰 페이지 구현
 
 <img width="600" src="https://user-images.githubusercontent.com/90392240/197587593-64e0179a-05da-4b82-a5ff-17d09ea714ed.gif" />
+
+- 리액트 쿼리를 이용하여 useMutation을 사용해 상품 이름별 리뷰를 가져올 수 있습니다.
 
 ## 피그마 디자인
 
@@ -190,10 +192,12 @@
 
 ### 배포 에러
 
-    리뷰 이미지를 등록할 때 이미지 처리를 AWS-S3를 이용하여 프론트가 버킷에 저장하고 보내는 방식이었습니다. 하지만 라이브러리 문제로 Vercel에 배포시 렌더링이 안되는 문제가 있었습니다.
-    AWS-S3와 React-S3 모두 에러가 나며 화면이 나타나지 않았습니다. 해결이 안된채로 이미지 등록 없이 배포를 해야하는 상황까지 고려했었습니다.
-    하지만 계속 방법을 찾았고 기존의 파이어베이스 스토리지를 사용했던 경험을 떠올려 이미지 등록은 파이어베이스 스토리지를 따로 만들어 저장하는 방식을 선택했습니다. 어차피 서버에는 이미지 경로만 저장되기 때문에 분산되긴 하지만 크게 문제될 것은 없었습니다. 
-    실제로 파이어베이스로 방식으로 전환했고 성공적으로 배포할 수 있었습니다. 
+리뷰 이미지를 등록할 때 이미지 처리를 AWS-S3를 이용하여 프론트가 버킷에 저장하고 보내는 방식이었습니다.
+하지만 라이브러리 문제로 Vercel에 배포시 렌더링이 안되는 문제가 있었습니다.
+AWS-S3와 React-S3 모두 에러가 나며 화면이 나타나지 않았습니다.
+해결이 안된채로 이미지 등록 없이 배포를 해야하는 상황까지 고려했었습니다.
+하지만 계속 방법을 찾았고 기존의 파이어베이스 스토리지를 사용했던 경험을 떠올려 이미지 등록은 파이어베이스 스토리지를 따로 만들어 저장하는 방식을 선택했습니다. 어차피 서버에는 이미지 경로만 저장되기 때문에 분산되긴 하지만 크게 문제될 것은 없었습니다.
+실제로 파이어베이스로 방식으로 전환했고 성공적으로 배포할 수 있었습니다.
 
 ### 플로우차트
 
