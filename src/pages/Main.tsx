@@ -1,27 +1,27 @@
-import { useEffect, useRef, useState } from 'react'
-import Event from '../components/event/MainEvent'
-import Recommend from '../components/main/Recommend'
-import Banner from './../components/Banner'
-import CardContainer from '../components/main/CardContainer'
-import NoticePage from './NoticePage'
-import MainReview from '../components/review/MainReview'
-import FilterBar from '../components/main/filterbar/FilterBar'
-import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
-import { getStoredToken } from '../components/local-storage/userStorage'
-import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { filterOptionState } from '../store/filterVallue'
-import MainCartModal from '../components/main/MainCartModal'
-import Footer from '../components/footer/Footer'
-import { filteredProudcts } from '../store/filterVallue'
+import { useRefreshToken } from '../components/auth/hooks/useRefreshToken'
 import { useUser } from '../components/auth/hooks/useUser'
+import Event from '../components/event/MainEvent'
+import Footer from '../components/footer/Footer'
+import { getStoredToken } from '../components/local-storage/userStorage'
+import CardContainer from '../components/main/CardContainer'
+import FilterBar from '../components/main/filterbar/FilterBar'
+import MobileFilter from '../components/main/filterbar/mobile/MobileFilter'
 import { useGetNewProduct, useGetProductsList } from '../components/main/hooks/useProductLists'
+import MainCartModal from '../components/main/MainCartModal'
+import Recommend from '../components/main/Recommend'
+import MainReview from '../components/review/MainReview'
+import { filterOptionState } from '../store/filterVallue'
+import { filteredProudcts } from '../store/filterVallue'
+import Banner from './../components/Banner'
 import { filterOpenState } from './../store/filterOpen'
+import NoticePage from './NoticePage'
 
 const Main = () => {
   const refreshToken = useRefreshToken()
   const [filterOpen, setFilterOpen] = useRecoilState(filterOpenState)
-  const [title, setTitle] = useState<any>('Best')
+  const [title, setTitle] = useState<string>('Best')
   const filteredProducts = useRecoilValue(filteredProudcts)
   const MobileFilterRef = useRef<HTMLDivElement>(null)
   const filterValue = useRecoilValue(filterOptionState)
@@ -41,13 +41,14 @@ const Main = () => {
     }
   }
 
-  const toColorTest = () => {
+  const toColorTest = useCallback(() => {
     window.location.href =
       'https://www.lenssiscolor.com/?utm_source=homapage_main&utm_medium=personal+color&utm_campaign=personal+color'
-  }
-  const toTopHandler = () => {
+  }, [])
+
+  const toTopHandler = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  }, [])
 
   // 메인에서 filterbar를 클릭했을 때 데이터 변경하는 함수입니다.
   const changeTitle = () => {
@@ -69,12 +70,13 @@ const Main = () => {
     allProductCurrentPage,
     user ? user?.memberId : 0
   )
+
   const { data: newProductLists, isFetching: newProductFetching } = useGetNewProduct(
     user ? user?.memberId : 0
   )
 
   useEffect(() => {
-    setCurrentPost(newProductLists?.productData?.slice(indexOfStart, indexOfLast))
+    setCurrentPost(newProductLists?.slice(indexOfStart, indexOfLast))
   }, [newProductLists, newProductCurrentPage])
   useEffect(() => {
     changeTitle()
@@ -82,15 +84,12 @@ const Main = () => {
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
   }, [])
 
   useEffect(() => {
     const token = getStoredToken()
     refreshToken(token)
   }, [])
-
-  useEffect(() => {}, [])
 
   return (
     <>
@@ -140,7 +139,7 @@ const Main = () => {
           >
             <img
               src="https://user-images.githubusercontent.com/90392240/193073587-58b90f5a-e06c-4f2c-baec-87351fbf4b96.png"
-              alt=""
+              alt="color-test-banner"
               className="w-full h-auto object-contain"
             />
           </div>
@@ -172,7 +171,7 @@ const Main = () => {
       </div>
       <div className="xs-max:hidden flex justify-end mt-[-60px] mb-[-70px] mr-2">
         <span className="hover:cursor-pointer">
-          <img className="inline" src={'/assets/toTopBtn.png'} onClick={toTopHandler} />
+          <img className="inline" src={'/assets/toTopBtn.png'} onClick={toTopHandler} alt="to-top-btn" />
         </span>
       </div>
       <Footer />

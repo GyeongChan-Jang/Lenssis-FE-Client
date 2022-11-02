@@ -76,7 +76,7 @@ const getNewProduct = async (memberId: number) => {
     url: `/product/newProduct?memberId=${memberId}`,
     headers: memberId === 0 ? undefined : getJWTToken(token)
   })
-  return data
+  return data.productData
 }
 export const useGetNewProduct = (memberId: number) => {
   const { fireToast } = useToast()

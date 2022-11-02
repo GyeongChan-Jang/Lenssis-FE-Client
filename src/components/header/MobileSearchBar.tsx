@@ -14,14 +14,14 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
   const navigate = useNavigate()
   const { searchLens, searchedLens } = useSearch()
   const { user } = useUser()
-  
+
   const searchSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if(!searchValue.trim()) {
+    if (!searchValue.trim()) {
       alert('검색어를 입력해주세요')
-      return;
+      return
     }
-    
+
     setUserSearched((prev) => [...prev, searchValue])
     searchLens({ keyword: searchValue, memberId: user?.memberId })
     setTimeout(() => {
@@ -60,7 +60,7 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
     <div className='fixed top-0 left-0 z-50 text-black w-screen h-screen bg-lenssisLightGray font-["SUIT"]'>
       <div className="h-[60px] w-full flex bg-lenssisSky items-center">
         <div className="w-8 flex items-center justify-center" onClick={popupSearchBarHandler}>
-          <img className="w-[12px] h-[20px]" src="/assets/leftarrow.png" alt="" />
+          <img className="w-[12px] h-[20px]" src="/assets/leftarrow.png" alt="popup-image" />
         </div>
         <div className="relative w-full">
           <form onSubmit={searchSubmitHandler}>
@@ -73,7 +73,7 @@ const MobileSearchBar = ({ popupSearchBarHandler }: MobileSearchBarHandlerProps)
             />
           </form>
           <div className="absolute right-8 top-[6px]">
-            <img width={25} height={25} src="/assets/bluesearch.png" alt="" />
+            <img width={25} height={25} src="/assets/bluesearch.png" alt="blue-search" />
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { useUser } from '../../auth/hooks/useUser'
 import { usePrefetchProductLists } from '../hooks/useProductLists'
 
@@ -15,8 +16,8 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
 
   const maxPage = Math.ceil(allCount / divide)
   useEffect(() => {
-    const arr = []
     if (maxPage) {
+      const arr = []
       for (let i = 1; i <= maxPage; i++) {
         arr.push(i)
       }
@@ -28,6 +29,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
     if (currentPage >= maxPage) return
     setCurrentPage(currentPage + 1)
   }
+
   const minusPage = () => {
     if (currentPage <= 1) return
     setCurrentPage(currentPage - 1)
@@ -46,6 +48,7 @@ function Pagination({ currentPage, setCurrentPage, allCount, divide }: PropsType
         </svg>
       </span>
       {pagesCount &&
+        allCount &&
         pagesCount.map((page: number) => (
           <span
             key={page}

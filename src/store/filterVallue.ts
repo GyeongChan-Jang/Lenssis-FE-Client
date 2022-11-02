@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { ProductResponseType } from '../components/main/types/productTypes'
 
 export interface FilterValue {
   // [index: string]: string | number[] | string[]
@@ -10,7 +11,7 @@ export interface FilterValue {
 }
 
 export interface FilteredProductsTypes {
-  productData: object[]
+  productData: ProductResponseType[]
   totalCount: number
 }
 

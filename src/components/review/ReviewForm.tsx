@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import Button from '../common/Button'
 import ReactStars from 'react-rating-stars-component'
 import { useAddReview, useUpdateReview } from './hooks/useReview'
-import AWS from 'aws-sdk'
-const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
 import { useResetRecoilState, useRecoilState } from 'recoil'
 import { selectFileState, updateReviewState } from '../../store/reviewImage'
 import { storage } from '../../firebase/firebaseConfig'
@@ -90,7 +88,6 @@ const ReviewForm = ({
 
   const handleReviewSubmit = async () => {
     if (!reviewImage && !updateReview.replyImageUrl) {
-      // console.log('이미지 없이 리뷰 등록 or 수정')
       if (reviewHandleType === 'add') {
         addReviewMutate({
           orderId: orderId,
@@ -119,7 +116,7 @@ const ReviewForm = ({
         ? `review/${orderId}-${reviewInfo?.productDetailsId}`
         : `review/${orderId}-${reviewItem[0]?.productDetailsId}`
     )
-    // console.log('이미지 있음, 등록, 수정', reviewImage)
+
     uploadString(
       imageRef,
       reviewHandleType === 'add' ? reviewImage : updateReview.replyImageUrl,
@@ -155,11 +152,19 @@ const ReviewForm = ({
     onClose()
   }
 
+  const canncelHandler = () => {
+    onClose()
+    setOldReviewInfo(undefined)
+    setReviewImage(null)
+    setReviewText('')
+    setRating(0)
+  }
+
   return (
     <>
       {isModalOpen ? (
         <div>
-          <div className="top-[10%] left-[27%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
+          <div className="top-[20%] left-[27%] justify-center items-center flex overflow-y-auto fixed xs-max:top-[10%] xs-max:right-[49.3%] z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto">
               <div className="xs-max:w-[350px] xs-max:h-[600px] w-[700px] h-[500px] border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-center pt-[26px] ">
@@ -181,6 +186,7 @@ const ReviewForm = ({
                             reviewItem[0]?.productImageUrl ||
                             '/assets/errorImage.png'
                           }
+                          alt="error-image"
                         />
                         {!updateReview.replyImageUrl ? (
                           <div className="text-[12px] opacity-0 hover:opacity-100 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold">
@@ -279,7 +285,7 @@ const ReviewForm = ({
                 </div>
                 {/* 웹 버전 */}
                 <div className="xs-max:hidden flex items-center justify-center gap-[10px]">
-                  <Button onClick={() => onClose()} bgColor="white" width="w-[150px]">
+                  <Button onClick={() => canncelHandler()} bgColor="white" width="w-[150px]">
                     <span>취소</span>
                   </Button>
                   <Button onClick={handleReviewSubmit} bgColor="dark" width="w-[150px]">

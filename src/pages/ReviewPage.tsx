@@ -52,7 +52,7 @@ const ReviewPage = () => {
             <ReviewContainer />
             <Pagination
               divide={1}
-              allCount={reviewItems.length}
+              allCount={reviewItems.length || 1}
               currentPage={1}
               setCurrentPage={setAllProductCurrentPage}
             />

@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react'
-import { NoticeDetailSkeleton } from '../../../common/ui/Skeleton'
-import Pagination from '../../common/Pagination'
-import { useGetAllNotice } from '../../hooks/useNotice'
-import { BoardMainList } from '../../types/noticeTypes'
-import MobileNotice from '../utils/MobileNotice'
-import WebNotice from '../utils/WebNotice'
+import { NoticeDetailSkeleton } from '../../common/ui/Skeleton'
+import Pagination from '../common/Pagination'
+import { useGetAllNotice } from '../hooks/useNotice'
+import { BoardMainList } from '../types/noticeTypes'
+import MobileNotice from './utils/MobileNotice'
+import WebNotice from './utils/WebNotice'
 
-function AboutEtc() {
+interface PropsType {
+  requestNumber: number
+}
+
+function NoticeLists({ requestNumber }: PropsType) {
   const [currentPage, setCurrentPage] = useState(1)
   const [boardList, setBoardList] = useState<BoardMainList[]>([])
   const divideCount = 10
   const indexOfEnd = currentPage * divideCount
   const indexOfStart = indexOfEnd - divideCount
-  const { data, isFetching } = useGetAllNotice(6)
+  const { data, isFetching } = useGetAllNotice(requestNumber)
+
   useEffect(() => {
     if (data) {
       setBoardList(data?.boardMainList?.slice(indexOfStart, indexOfEnd))
@@ -28,8 +33,12 @@ function AboutEtc() {
       ) : (
         boardList.map((item: BoardMainList) => (
           <div key={item.boardId}>
-            <WebNotice id={item.boardId} title={item.boardTitle} />
-            <MobileNotice id={item.boardId} title={item.boardTitle} createdAt={item.createdAt} />
+            <WebNotice id={item.boardId} title={item.boardTitle || '|No Title|'} />
+            <MobileNotice
+              id={item.boardId}
+              title={item.boardTitle || '|No Title|'}
+              createdAt={item.createdAt}
+            />
           </div>
         ))
       )}
@@ -38,7 +47,7 @@ function AboutEtc() {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            allCount={data.totalCount}
+            allCount={data.totalCount || 1}
             divide={divideCount}
           />
         )}
@@ -47,4 +56,4 @@ function AboutEtc() {
   )
 }
 
-export default AboutEtc
+export default NoticeLists

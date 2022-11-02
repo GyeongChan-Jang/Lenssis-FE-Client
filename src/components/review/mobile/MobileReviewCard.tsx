@@ -9,6 +9,7 @@ const MobileReviewCard = ({ review }: any) => {
           height="140px"
           className=" rounded rounded-t-[5px]"
           src={review.reviewImageUrl || review.productImageUrl}
+          alt="review-image"
         />
       </div>
       <div className="p-[2px] mt-[2px] w-[150px] h-[45px]">

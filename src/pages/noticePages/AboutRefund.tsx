@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react'
-import { NoticeDetailSkeleton } from '../../../common/ui/Skeleton'
-import Pagination from '../../common/Pagination'
-import { useGetAllNotice } from '../../hooks/useNotice'
-import { BoardMainList } from '../../types/noticeTypes'
-import MobileNotice from '../utils/MobileNotice'
-import WebNotice from '../utils/WebNotice'
+import { NoticeDetailSkeleton } from '../../components/common/ui/Skeleton'
+import Pagination from '../../components/main/common/Pagination'
+import { useGetAllNotice } from '../../components/main/hooks/useNotice'
+import MobileNotice from '../../components/main/notice/utils/MobileNotice'
+import WebNotice from '../../components/main/notice/utils/WebNotice'
+import { BoardMainList } from '../../components/main/types/noticeTypes'
 
-function AboutCredit() {
+function AboutRefund() {
   const [currentPage, setCurrentPage] = useState(1)
   const [boardList, setBoardList] = useState<BoardMainList[]>([])
   const divideCount = 10
   const indexOfEnd = currentPage * divideCount
   const indexOfStart = indexOfEnd - divideCount
-  const { data, isFetching } = useGetAllNotice(3)
+  const { data, isFetching } = useGetAllNotice(2)
   useEffect(() => {
     if (data) {
       setBoardList(data?.boardMainList?.slice(indexOfStart, indexOfEnd))
     }
   }, [data, currentPage])
+
   return (
     <>
       {isFetching ? (
         <NoticeDetailSkeleton />
-      ) : data?.totalCount ? (
+      ) : data && data?.totalCount === 0 ? (
         <div className="text-center text-[24px] mt-10 text-lenssisDark">등록된 내용이 없습니다</div>
       ) : (
         boardList.map((item: BoardMainList) => (
@@ -37,7 +38,7 @@ function AboutCredit() {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            allCount={data.totalCount}
+            allCount={data.totalCount || 1}
             divide={divideCount}
           />
         )}
@@ -46,4 +47,4 @@ function AboutCredit() {
   )
 }
 
-export default AboutCredit
+export default AboutRefund

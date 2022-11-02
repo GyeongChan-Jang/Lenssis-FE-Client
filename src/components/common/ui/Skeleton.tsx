@@ -30,6 +30,7 @@ export const ProductMainSkeleton = ({ count }: PropsType) => {
     </>
   )
 }
+
 export const ProductNewSkeleton = ({ count }: PropsType) => {
   const [length, setLength] = useState(8)
   const arr = new Array(length).fill(1)

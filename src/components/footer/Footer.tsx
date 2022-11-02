@@ -29,17 +29,17 @@ const Footer = () => {
       <ul className="absolute flex flex-col gap-y-4 right-8 top-8">
         <li>
           <a href="https://www.youtube.com">
-            <img className="mx-auto" width={40} height={40} src="/assets/tiktok.png" />
+            <img className="mx-auto" width={40} height={40} src="/assets/tiktok.png" alt="sns-icon" />
           </a>
         </li>
         <li>
           <a href="https://www.line.me/ko">
-            <img className="mx-auto" width={40} height={40} src="/assets/line.png" />
+            <img className="mx-auto" width={40} height={40} src="/assets/line.png" alt="sns-icon" />
           </a>
         </li>
         <li>
           <a href="https://www.instagram.com">
-            <img className="mx-auto" width={40} height={40} src="/assets/insta.png" />
+            <img className="mx-auto" width={40} height={40} src="/assets/insta.png" alt="sns-icon" />
           </a>
         </li>
       </ul>

@@ -42,12 +42,14 @@ export interface ProductDetailResponseType {
 }
 
 export interface CardContainerPropsType {
-  data?: Data
-  productLists: []
-  fetching: boolean
+  data: string
+  productLists?: ProductResponseType[]
+  fetching?: boolean
   allProductCurrentPage?: number
+  setAllProductCurrentPage?: (param: number) => void
   newProductCurrentPage?: number
+  setNewProductCurrentPage?: (param: number) => void
   allProductCount?: number
   newProductCount?: number
+  currentPost?: ProductResponseType[]
 }
-type Data = 'Best' | 'New' | 'Products'

@@ -17,7 +17,7 @@ function NoticePageTab() {
   }
   const selectOptionHandler = (title: string) => {
     setOptionName(title)
-    setIsOpen((prev) => (prev = false))
+    setIsOpen(false)
   }
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function NoticePageTab() {
           <div className=" h-6 flex justify-end">
             <button className="w-32 flex items-center " onClick={changeViewOption}>
               <div className="mr-4 font-[800] text-[#1b304a] text-[16px] grow">{optionName}</div>
-              <img width={8} src="/assets/arrowtobottom.png" alt="" />
+              <img width={8} src="/assets/arrowtobottom.png" alt="arrow-bottom" />
             </button>
           </div>
 

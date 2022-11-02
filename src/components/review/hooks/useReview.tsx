@@ -106,7 +106,6 @@ const getAllReviewItems = async () => {
   const data = await axiosInstance({
     url: '/reply/allReply',
     method: 'GET',
-    headers: getJWTToken(token),
     params: {
       page: 1,
       size: 10
@@ -205,7 +204,7 @@ export const useUpdateReview = () => {
           position: 'top',
           timer: 2000
         })
-        queryClient.invalidateQueries(queryKeys.myReview)
+        queryClient.invalidateQueries(queryKeys.review)
       }
     }
   )

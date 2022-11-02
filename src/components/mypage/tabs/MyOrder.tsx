@@ -36,6 +36,9 @@ const MyOrder = () => {
     })
   }, [user])
   console.log(myPurchase)
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/assets/errorImage.png'
+  }
 
   return (
     <CardLayout title="주문 내역">
@@ -56,7 +59,7 @@ const MyOrder = () => {
 
       {myPurchase && myPurchase.length !== 0
         ? myPurchase.map((product) => (
-            <div className="flex flex-col hover:bg-slate-50" key={product.orderInfo.orderId}>
+            <div className="flex flex-col hover:bg-slate-50 max-w-[858px]" key={product.orderInfo.orderId}>
               <h4 className="py-2 text-[#5a5a5a] font-semibold flex justify-start items-center gap-4 text-xs xs:text-base">
                 <p className="flex items-center gap-2">
                   <span className="font-bold text-[#1b304a]">주문일자</span>
@@ -71,7 +74,13 @@ const MyOrder = () => {
                 {product.productInfo.map((pInfo) => (
                   <div className=" flex flex-row items-center justify-between w-full px-4 gap-4">
                     <div key={pInfo.productId}>
-                      <img width={100} height={100} src={pInfo.imageUrl} alt="눈알" />
+                      <img
+                        onError={handleImgError}
+                        width={100}
+                        height={100}
+                        src={pInfo.imageUrl}
+                        alt="눈알"
+                      />
                     </div>
                     <div className="grow ">
                       <p className="text-[#7a7a7a]">{pInfo.productName}</p>

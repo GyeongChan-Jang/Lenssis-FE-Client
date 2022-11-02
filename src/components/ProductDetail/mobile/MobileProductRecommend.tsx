@@ -44,7 +44,7 @@ const MobilePoductRecommend = ({ productId }: any) => {
             {data.map((img: any, index: number) => (
               <div key={index}>
                 <SwiperSlide key={index}>
-                  <img width={130} height={130} src={img?.colorAndImage[0].imageUrl} />
+                  <img width={130} height={130} src={img?.colorAndImage[0].imageUrl} alt="recommend-image" />
                 </SwiperSlide>
               </div>
             ))}

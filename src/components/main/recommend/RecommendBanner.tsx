@@ -7,6 +7,8 @@ import 'swiper/components/pagination/pagination.scss'
 import 'swiper/components/scrollbar/scrollbar.scss'
 import { RecommendResponse } from '../hooks/useRecommend'
 import RecommendCard from './RecommendCard'
+import { useRecoilValue } from 'recoil'
+import { CurrentInnerWidth } from '../../../store/currentInnerWidth'
 
 interface PropsType {
   recommendProductLists: RecommendResponse[]
@@ -16,14 +18,7 @@ function RecommendBanner({ recommendProductLists }: PropsType) {
   const prevRef = useRef<HTMLButtonElement>(null)
   const nextRef = useRef<HTMLButtonElement>(null)
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
-  const changeWindowWidth = () => {
-    setWindowWidth(window.innerWidth)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', changeWindowWidth)
-  }, [])
-
+  const windowWidth = useRecoilValue(CurrentInnerWidth)
   SwiperCore.use([Navigation, Pagination, Autoplay])
   useEffect(() => {
     if (!swiperSetting) {
@@ -104,7 +99,7 @@ function RecommendBanner({ recommendProductLists }: PropsType) {
                   <>
                     <img
                       src={item.imageUrl}
-                      alt=""
+                      alt="recommend-image"
                       style={{
                         width: '230px',
                         height: '280px',
@@ -173,7 +168,7 @@ function RecommendBanner({ recommendProductLists }: PropsType) {
                   <>
                     <img
                       src={item.imageUrl}
-                      alt=""
+                      alt="recommend-image"
                       style={{
                         width: '160px',
                         height: '200px',

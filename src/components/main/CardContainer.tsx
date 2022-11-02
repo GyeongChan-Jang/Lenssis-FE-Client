@@ -1,10 +1,7 @@
-import { useState } from 'react'
 import Card from '../common/Card'
-import { ProductPropsType, ProductResponseType } from './types/productTypes'
-import Pagination from './common/Pagination'
-import { useRecoilValue } from 'recoil'
 import { ProductMainSkeleton, ProductNewSkeleton } from '../common/ui/Skeleton'
-import { filterOptionState } from '../../store/filterVallue'
+import Pagination from './common/Pagination'
+import { CardContainerPropsType, ProductPropsType, ProductResponseType } from './types/productTypes'
 
 const CardContainer = ({
   data,
@@ -15,12 +12,7 @@ const CardContainer = ({
   setAllProductCurrentPage,
   setNewProductCurrentPage,
   currentPost
-}: any) => {
-  const filterValue = useRecoilValue(filterOptionState)
-  // 필터링된 상품 리스트입니다.
-
-  const [filteredProductCurrentPage, setFilteredProductCurrentPage] = useState(1)
-  // console.log(productLists)
+}: CardContainerPropsType) => {
   return (
     <>
       {data !== 'New' ? (
@@ -54,9 +46,9 @@ const CardContainer = ({
           </div>
           {productLists && productLists[0] && (
             <Pagination
-              currentPage={allProductCurrentPage}
-              setCurrentPage={setAllProductCurrentPage}
-              allCount={productLists[0].totalCount}
+              currentPage={allProductCurrentPage as number}
+              setCurrentPage={setAllProductCurrentPage as () => void}
+              allCount={productLists[0]?.totalCount || 1}
               divide={9}
             />
           )}
@@ -88,11 +80,11 @@ const CardContainer = ({
               ))
             )}
           </div>
-          {productLists.totalCount && (
+          {productLists?.length && (
             <Pagination
-              currentPage={newProductCurrentPage}
-              setCurrentPage={setNewProductCurrentPage}
-              allCount={productLists.totalCount}
+              currentPage={newProductCurrentPage as number}
+              setCurrentPage={setNewProductCurrentPage as () => void}
+              allCount={productLists?.length || 1}
               divide={8}
             />
           )}

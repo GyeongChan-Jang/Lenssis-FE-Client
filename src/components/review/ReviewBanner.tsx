@@ -61,7 +61,7 @@ const ReviewBanner = () => {
             {reviewImgs.map((img: string, index: number) => (
               <div key={index}>
                 <SwiperSlide key={index}>
-                  <img src={img} className="rounded-[5px]" width={175} />
+                  <img src={img} className="rounded-[5px]" width={175} alt="review-image" />
                 </SwiperSlide>
               </div>
             ))}
@@ -69,7 +69,7 @@ const ReviewBanner = () => {
         </Swiper>
       )}
       <button ref={nextRef} className="absolute top-[42%] right-[-20px] z-[9] hover:color-white">
-        <img src={rightArrow} alt="" />
+        <img src={rightArrow} alt="arrow-right" />
       </button>
     </div>
   )

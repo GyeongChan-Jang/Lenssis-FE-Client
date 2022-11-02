@@ -111,7 +111,7 @@ const MobileSideBar = () => {
               to="/notice"
               className="flex flex-col items-center font-bold gap-[5px]"
             >
-              <img className="w-[30px] h-[30px]" src="/assets/ringbell.png" alt="" />
+              <img className="w-[30px] h-[30px]" src="/assets/ringbell.png" alt="ringbell" />
               <p className="h-6 text-sm">公知事項</p>
             </Link>
           </li>
@@ -121,7 +121,7 @@ const MobileSideBar = () => {
               to="/favorite"
               className="flex flex-col items-center font-bold gap-[5px]"
             >
-              <img className="w-[30px] h-[30px]" src="/assets/heart.png" alt="" />
+              <img className="w-[30px] h-[30px]" src="/assets/heart.png" alt="heart" />
               <p className="h-6 text-sm">お気に入り</p>
             </Link>
           </li>
@@ -151,21 +151,21 @@ const MobileSideBar = () => {
         <ul className="flex flex-col gap-y-2 font-bold">
           <li
             className="pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between text-lenssisDark"
-            onClick={() => scrollHandler(568)}
+            onClick={() => scrollHandler(530)}
           >
             <span>Best</span>
             <RightArrow />
           </li>
           <li
             className="pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between text-lenssisDark"
-            onClick={() => scrollHandler(2242)}
+            onClick={() => scrollHandler(2500)}
           >
             <span>New</span>
             <RightArrow />
           </li>
           <li
             className="pl-2 pr-4 pb-2 border-b border-solid border-lenssisStroke w-full flex justify-between text-lenssisDark"
-            onClick={() => scrollHandler(5018)}
+            onClick={() => scrollHandler(4543)}
           >
             <span>Recommend</span>
             <RightArrow />

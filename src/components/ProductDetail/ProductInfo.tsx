@@ -1,25 +1,25 @@
-import Heart from '/assets/Heart.svg'
-import FillHeart from '/assets/FillHeart.svg'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { ProductDetailResponseType } from '../main/types/productTypes'
-import { useCallback, useEffect, useState } from 'react'
-import { useAddFavorite, useDeleteFavorite } from '../main/hooks/useFavorite'
-import { axiosInstance, getJWTToken } from '../axiosinstance'
-import { getStoredToken } from '../local-storage/userStorage'
-import { productDetailsState } from '../../store/productDetails'
+import { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import FillHeart from '/assets/FillHeart.svg'
+import Heart from '/assets/Heart.svg'
+import { MainCartModalState } from '../../store/mainCart'
 import {
   FinalProduct,
   finalProductState,
   productByOptionsState,
   ProductByOptionsType
 } from '../../store/productByOptions'
+import { productDetailsState } from '../../store/productDetails'
 import { ProductDetailsType } from '../../store/productDetails'
-import { useAddCart } from '../cart/hooks/useCart'
-import { MainCartModalState } from '../../store/mainCart'
 import { selectProduct } from '../../store/selectProduct'
+import { axiosInstance, getJWTToken } from '../axiosinstance'
+import { useAddCart } from '../cart/hooks/useCart'
+import { getStoredToken } from '../local-storage/userStorage'
+import { useAddFavorite, useDeleteFavorite } from '../main/hooks/useFavorite'
+import { ProductDetailResponseType } from '../main/types/productTypes'
 import OptionAndCount from './OptionAndCount'
-import { useNavigate } from 'react-router-dom'
 
 interface PropsType {
   isClose?: boolean
@@ -31,10 +31,6 @@ interface PropsType {
 const token = getStoredToken()
 
 const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType) => {
-  const [commaPrice, setCommaPrice] = useState({
-    price: '',
-    discount: ''
-  })
   const [detailState, setDetailState] = useRecoilState<ProductDetailsType>(productDetailsState)
   const [productByOptions, setProductByOptions] = useRecoilState<ProductByOptionsType>(productByOptionsState)
   const [optionComplete, setOptionComplete] = useState<boolean>(true)
@@ -113,7 +109,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     {
       mutationKey: ['postAllOptions'],
       onSuccess: (data) => {
-        console.log(data.data)
         setFinalProduct({ ...finalProduct, ...data.data, pcs: 1 })
       },
       onError: (error) => {
@@ -140,9 +135,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             period: Number(value)
           }))
         }
-        console.log(detailState.period)
       } else if (name === 'color') {
-        console.log(value)
         selectOptionMutate({ ...detailState, colorCode: value })
         if (detailState.colorCode === value) {
           setDetailState({
@@ -155,7 +148,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             colorCode: value
           }))
         }
-        console.log(detailState.colorCode)
       } else if (name === 'graphicDiameter') {
         selectOptionMutate({ ...detailState, graphicDiameter: Number(value) })
         if (detailState.graphicDiameter === Number(value)) {
@@ -169,7 +161,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
             graphicDiameter: Number(value)
           }))
         }
-        console.log(detailState.graphicDiameter)
       } else if (name === 'degree') {
         const degreeInfo = value.split(',').map(Number)
         setDetailState({
@@ -185,7 +176,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     addCartMutate(finalProduct.productDetailsId)
     setModalState((prev) => (prev = false))
     resetOptions()
-    console.log('제품상세 장바구니 버튼 클릭!')
   }
 
   const favoriteHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -227,11 +217,6 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
     if (detailState.period === 0) setFinalOption(false)
     // 도수 선택시 detailState 값이 변경되지 않는문제 -> useEffect로 감시
     if (finalProduct.productName === '' && detailState.graphicDiameter) postAllOptions(detailState)
-
-    console.log('옵션 선택 state', detailState)
-    console.log('degree', detailState.degree)
-    console.log('도수까지 선택했을때/최종상품', finalProduct)
-    console.log('옵션 순차적으로', productByOptions)
   }, [productDetails?.price, productByOptions, detailState, finalProduct])
 
   const buyHandler = () => {
@@ -267,6 +252,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
           onClick={() => setModalState(false)}
           onError={(e) => handleImgError(e)}
           src={'/assets/close.png'}
+          alt="close-image"
         />
       )}
       <div className="container pt-44 pb-10 mx-auto ">
@@ -288,6 +274,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
                   onError={(e) => handleImgError(e)}
                   className="rounded xs-max:w-[74px] xs:w-[74px] sm:w-[105px]"
                   src={image}
+                  alt="sub-image"
                 />
               ))}
             </div>
@@ -456,7 +443,7 @@ const ProductInfo = ({ isClose, productDetails, productId, memberId }: PropsType
               <div className="flex">
                 <p className="w-[130px] xs-max:w-[70px] lg:w-[160px]"></p>
               </div>
-              {finalOption && <OptionAndCount onClose={setFinalOption}/>}
+              {finalOption && <OptionAndCount onClose={setFinalOption} />}
             </div>
             <div className="flex justify-between py-2">
               <span className="leading-10 text-black text-[16px] font-bold">총 상품 금액</span>

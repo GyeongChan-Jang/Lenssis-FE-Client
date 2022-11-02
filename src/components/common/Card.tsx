@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import CartAndHeart from './CartAndHeart'
-import { SubtractIcon } from './util/Icon'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ColorAndImage, ProductPropsType } from '../main/types/productTypes'
+import { useRecoilValue } from 'recoil'
+import { CurrentInnerWidth } from '../../store/currentInnerWidth'
 
+import { ColorAndImage, ProductPropsType } from '../main/types/productTypes'
+import CartIcon from './CartIcon'
+import CartAndHeart from './CartIcon'
+import FavoriteIcon from './FavoriteIcon'
+import Img from './Img'
+import { SubtractIcon } from './util/Icon'
 interface PropsType extends ProductPropsType {
   idx: number
   isNew?: boolean
   needsRank?: boolean
 }
 
-const Card = ({
+const Card: React.FC<PropsType> = ({
   idx,
   series,
   price,
@@ -21,37 +26,14 @@ const Card = ({
   productId,
   isFavorite,
   needsRank
-}: PropsType) => {
+}) => {
+  const windowWidth = useRecoilValue(CurrentInnerWidth)
   const navigate = useNavigate()
   const [viewImg, setViewImg] = useState<string>(colorAndImage[0]?.imageUrl)
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth)
-  const [commaPrice, setCommaPrice] = useState({
-    price: '',
-    discount: ''
-  })
-
-  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = '/assets/errorImage.png'
-  }
-
-  const changeWindowWidth = () => {
-    setWindowWidth(window.innerWidth)
-  }
 
   const changeImageHandler = (_: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
     setViewImg(colorAndImage[idx]?.imageUrl)
   }
-
-  useEffect(() => {
-    setCommaPrice({
-      ...commaPrice,
-      price: Number((price * (1 - discount / 100)).toFixed(0)).toLocaleString(),
-      discount: price.toLocaleString()
-    })
-  }, [price, discount])
-  useEffect(() => {
-    window.addEventListener('resize', changeWindowWidth)
-  }, [])
 
   return (
     <>
@@ -80,12 +62,11 @@ const Card = ({
           <></>
         )}
         <span className="relative">
-          <img
+          <Img
             onClick={() => navigate(`/product/${productId}`)}
-            src={viewImg && viewImg}
-            onError={(e) => handleImgError(e)}
+            src={viewImg}
             alt="プロダクトイメージ"
-            className=" bg-origin-content cursor-pointer rounded-md w-[160px] h-[160px] md:w-full md:h-[220px] mx-auto"
+            className=" bg-origin-content cursor-pointer rounded-md w-[160px] h-[160px] md:w-[260px] md:h-[255px] mx-auto"
           />
           {isNew && (
             <span className="absolute bottom-0 right-0">
@@ -125,19 +106,24 @@ const Card = ({
               ></div>
             ))}
           </div>
-          <span className="hidden xs:block absolute top-[265px] right-1 ">
-            <CartAndHeart productId={productId} isFavorite={isFavorite} />
+          <span className="hidden xs:flex absolute top-[265px] right-1 justify-center items-center  ">
+            <CartIcon productId={productId} isFavorite={isFavorite} />
+            <FavoriteIcon productId={productId} isFavorite={isFavorite} />
           </span>
-          <span className="xs:hidden block absolute top-[170px] right-1">
-            <CartAndHeart productId={productId} isFavorite={isFavorite} />
+          <span className="xs:hidden flex absolute top-[170px] right-1">
+            <CartIcon productId={productId} isFavorite={isFavorite} />
+            <FavoriteIcon productId={productId} isFavorite={isFavorite} />
           </span>
           <div className=" text-[14px] md:text-[18px] font-[600]">{series}</div>
           <div className="flex justify-start items-center my-[5px]">
             <div className="mr-2 md:mr-4 font-[700] text-[14px] text-lenssisDeepGray md:text-[16px]">
-              {commaPrice.discount}円
+              {Number(price * (1 - discount / 100))
+                .toLocaleString()
+                .slice(0, 5)}
+              円
             </div>
             <div className="text-lenssisGray line-through font-[700] text-[12px] md:text-[14px]">
-              {commaPrice.price}円
+              {Number(price).toLocaleString()}円
             </div>
           </div>
           <div className="flex justify-start mt-[5px] w-full overflow-hidden flex-wrap">

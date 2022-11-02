@@ -1,29 +1,36 @@
-import { NavLink } from 'react-router-dom'
+import { useReducer, useState } from 'react'
 import { NoticeTitles } from '../../../../constants/NoticeTitles'
+import NoticeLists from '../NoticeLists'
+import { initialState } from '../utils/InitialState'
+import { reducer } from '../utils/ReducerFunc'
+
 interface Title {
   title: string
-  value: string
+  value: number
 }
 
 function MainNoticeTab() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const [requestNumber, setRequestNumber] = useState(0)
   return (
     <>
       <div className="overflow-y-scroll flex  xs:text-center border-b-[1px] border-solid border-lenssisLightGray">
         {NoticeTitles.map((title: Title, index: number) => (
-          <NavLink
-            key={index}
-            style={({ isActive }) => ({
-              borderBottom: isActive ? '5px solid #1B304A' : 'none',
-              fontWeight: isActive ? '700' : '600',
-              color: isActive ? '#1b304a' : '#d3d3d3'
-            })}
-            to={title.value}
-            className="w-[100px] xs:w-[200px] py-[4px] px-2 mx-[2px] xs:mx-auto whitespace-nowrap"
+          <button
+            onClick={() => {
+              dispatch({ type: title.value })
+              setRequestNumber(title.value)
+            }}
+            key={`${title}-${index}`}
+            className={`w-[100px] xs:w-[200px] py-[4px] px-2 mx-[2px] xs:mx-auto whitespace-nowrap ${
+              state[title.value]
+            }`}
           >
             {title.title}
-          </NavLink>
+          </button>
         ))}
       </div>
+      <NoticeLists requestNumber={requestNumber} />
     </>
   )
 }

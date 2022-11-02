@@ -49,7 +49,7 @@ const ReviewMobileBanner = () => {
             {reviewImgs.map((img: string, index: number) => (
               <div key={index}>
                 <SwiperSlide key={index}>
-                  <img width={130} height={130} src={img} />
+                  <img width={130} height={130} src={img} alt="review-image" />
                 </SwiperSlide>
               </div>
             ))}

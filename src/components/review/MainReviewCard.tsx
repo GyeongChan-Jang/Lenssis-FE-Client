@@ -1,6 +1,9 @@
 import ReactStars from 'react-rating-stars-component'
 
 const MainReviewCard = ({ review }: any) => {
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/assets/errorImage.png'
+  }
   return (
     <div
       key={review.content}
@@ -12,6 +15,7 @@ const MainReviewCard = ({ review }: any) => {
           height={210}
           className=" rounded rounded-t-[5px]"
           src={review.reviewImageUrl || review.productImageUrl}
+          onError={(e) => handleImgError(e)}
         />
       </div>
       <div className="p-2 w-[230px] h-[60px] mb-2">
